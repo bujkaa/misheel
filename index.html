@@ -3,36 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hey... 💖</title>
+  <title>Hey... 💌</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      width: 100%;
       font-family: -apple-system, BlinkMacSystemFont, 'Comic Sans MS', cursive, sans-serif;
-      background: url('https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1603322029894-50a7e3f6f155?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
       background-size: cover;
       color: white;
       text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden;
     }
     #container {
-      max-width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
       padding: 20px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 20px;
+      height: 100%;
+      position: relative;
+      z-index: 2;
     }
     #msg {
       font-size: 6vw;
+      max-width: 90%;
       opacity: 0;
       transition: opacity 1s ease-in-out;
+    }
+    #replyBtn {
+      margin-top: 40px;
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      text-decoration: none;
     }
 
     @media (min-width: 600px) {
@@ -40,21 +52,90 @@
         font-size: 2rem;
       }
     }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      transform: rotate(45deg);
+      animation: float 8s linear infinite;
+      opacity: 0.7;
+      z-index: 1;
+    }
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+    .heart::before { top: -10px; left: 0; }
+    .heart::after  { top: 0; left: -10px; }
+
+    @keyframes float {
+      0% {
+        bottom: -10%;
+        transform: translateX(0) rotate(45deg);
+      }
+      100% {
+        bottom: 110%;
+        transform: translateX(30px) rotate(45deg);
+      }
+    }
+
+    #ytplayer {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
   </style>
 </head>
 <body>
   <div id="container">
     <div id="msg">Hey...</div>
+    <a id="replyBtn" href="https://www.instagram.com/bvjkas/" target="_blank">💬 Tap to reply</a>
   </div>
+
+  <!-- YouTube player (hidden but plays) -->
+  <div id="ytplayer"></div>
+  <script>
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    let player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('ytplayer', {
+        height: '0',
+        width: '0',
+        videoId: 'dstuitW8PWM',
+        playerVars: {
+          autoplay: 1,
+          loop: 1,
+          playlist: 'dstuitW8PWM',
+          controls: 0,
+          mute: 0
+        },
+        events: {
+          onReady: (event) => event.target.playVideo()
+        }
+      });
+    }
+  </script>
 
   <script>
     const messages = [
       "Hey... 👋",
-      "I know this might be unexpected... XD",
-      "But there's something on my heart for so long now :) .",
-      "You're beautiful, inside and out.",
+      "I know this might be unexpected... lol",
+      "But there's something on my heart for a long time now.",
+      "You're beautiful, inside and out.💫",
       "So I have to ask...",
       "Would you be my girlfriend? 💖"
+      "From"
+      "Your future boyfriend"
       "-Bujka"
     ];
 
@@ -68,11 +149,21 @@
         msg.style.opacity = 1;
         i++;
         if (i < messages.length) {
-          setTimeout(showNext, 2800);
+          setTimeout(showNext, 3000);
         }
       }, 900);
     }
 
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
+    }
+
+    setInterval(createHeart, 500);
     window.onload = () => setTimeout(showNext, 1000);
   </script>
 </body>
