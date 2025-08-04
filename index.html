@@ -6,6 +6,7 @@
   <title>Hey... 💌</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -16,18 +17,18 @@
       padding: 0;
       height: 100%;
       width: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-      background: #000;
+      overflow: hidden;
+      background-color: #000;
     }
     body::before {
       content: "";
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: url('https://plus.unsplash.com/premium_vector-1709061466287-569b20046420?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center center no-repeat;
       background-size: contain;
-      background-color: #000;
       z-index: -1;
     }
     #container {
@@ -35,26 +36,25 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      position: relative;
-      z-index: 1;
+      height: 100vh;
       padding: 20px;
+      text-align: center;
     }
     #messages {
-      font-size: 1.6rem;
+      color: white;
+      font-size: 1.8rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      color: white;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+      gap: 20px;
     }
-    .line {
-      opacity: 1;
-      animation: fadeIn 1s ease;
+    .line span {
+      opacity: 0;
+      display: inline-block;
+      animation: letterFade 0.3s forwards;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes letterFade {
+      from { opacity: 0; transform: translateY(5px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .heartbeat {
@@ -64,101 +64,38 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.1); }
     }
-    #signature {
-      font-family: 'Pacifico', cursive;
-      font-size: 2rem;
-      color: white;
-      margin-top: 20px;
-      opacity: 0;
-      animation: signatureFade 2s ease forwards;
-    }
-    @keyframes signatureFade {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
     #replyBtn {
-      margin-top: 40px;
+      margin-top: 30px;
+      padding: 12px 24px;
       background: #ff69b4;
       color: white;
-      border: none;
-      padding: 14px 28px;
       font-size: 1.2rem;
-      border-radius: 999px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      border: none;
+      border-radius: 30px;
       text-decoration: none;
-      z-index: 2;
     }
     #unmuteBtn {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 20px;
       background: rgba(0,0,0,0.5);
       color: white;
+      padding: 10px 16px;
+      border-radius: 20px;
       border: none;
-      padding: 8px 16px;
       font-size: 1rem;
-      border-radius: 999px;
-      cursor: pointer;
-      z-index: 1000;
-    }
-    .sparkle {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      background: white;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.6;
       z-index: 999;
-      animation: sparkle-fade 1s forwards;
-    }
-    @keyframes sparkle-fade {
-      to { opacity: 0; transform: translateY(-20px) scale(1.5); }
-    }
-    .heart {
-      position: fixed;
-      width: 14px;
-      height: 14px;
-      background: pink;
-      transform: rotate(45deg);
-      animation: heartFloat 4s linear infinite;
-      opacity: 0.7;
-      z-index: 0;
-    }
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background: pink;
-      border-radius: 50%;
-    }
-    .heart::before {
-      top: -7px;
-      left: 0;
-    }
-    .heart::after {
-      left: -7px;
-      top: 0;
-    }
-    @keyframes heartFloat {
-      0% { bottom: 0; opacity: 1; transform: translateY(0) scale(1) rotate(45deg); }
-      100% { bottom: 100vh; opacity: 0; transform: translateY(-100px) scale(1.5) rotate(45deg); }
     }
   </style>
 </head>
 <body>
   <div id="container">
     <div id="messages"></div>
-    <div id="signature"></div>
-    <a id="replyBtn" href="https://instagram.com/bvjkas/" target="_blank">💌 Ийшээ ороод хариугаа хэлээрэй 😳</a>
+    <a id="replyBtn" href="https://instagram.com/bvjkas/" target="_blank">💌 Ийшээ ороод хариугаа хэлээрэй</a>
     <button id="unmuteBtn">🔊 Tap for sound</button>
   </div>
-  <div style="position:absolute; left:-9999px; top:-9999px;">
-    <iframe id="ytplayer" width="0" height="0" src="https://www.youtube.com/embed/nUF_NyG7-04?autoplay=1&loop=1&playlist=nUF_NyG7-04&mute=1&controls=0" frameborder="0" allow="autoplay" allowfullscreen></iframe>
-  </div>
+  <div id="ytplayer"></div>
+
   <script>
     const messages = [
       "Hey... 👋",
@@ -166,12 +103,13 @@
       "But there’s something I’ve been meaning to say for a long time now 🙂.",
       "You're beautiful, inside and out. ✨",
       "I fell in love the way you fall asleep...",
-      "Slowly and then all at once."
+      "Slowly and then all at once.",
       "Would you be my girlfriend? 💖"
     ];
+
     const container = document.getElementById("messages");
-    const signature = document.getElementById("signature");
     let i = 0;
+
     function typeLine(text, callback) {
       const line = document.createElement("div");
       line.className = "line";
@@ -179,56 +117,56 @@
       let j = 0;
       function typeChar() {
         if (j < text.length) {
-          line.textContent += text.charAt(j++);
-          setTimeout(typeChar, 45);
+          const span = document.createElement("span");
+          span.textContent = text.charAt(j);
+          span.style.animationDelay = `${j * 40}ms`;
+          line.appendChild(span);
+          j++;
+          setTimeout(typeChar, Math.random() * 40 + 30);
         } else {
           if (text.includes("Would you be my girlfriend?")) {
             line.classList.add("heartbeat");
+            confetti({ particleCount: 120, spread: 90, origin: { y: 0.6 } });
           }
           if (callback) setTimeout(callback, 800);
         }
       }
       typeChar();
     }
+
     function showMessages() {
       if (i < messages.length) {
         typeLine(messages[i], showMessages);
         i++;
-      } else {
-        setTimeout(() => {
-          signature.textContent = "Yours truly, Bujka 💖";
-          signature.style.opacity = "1";
-          confetti({ particleCount: 120, spread: 90, origin: { y: 0.6 } });
-        }, 1000);
       }
     }
+
     window.addEventListener("load", () => {
       setTimeout(showMessages, 1000);
-      generateHearts();
     });
+
     document.getElementById("unmuteBtn").addEventListener("click", () => {
-      const iframe = document.getElementById("ytplayer");
-      iframe.src = iframe.src.replace("mute=1", "mute=0");
+      player.unMute();
       document.getElementById("unmuteBtn").style.display = "none";
     });
-    window.addEventListener("scroll", () => {
-      const sparkle = document.createElement("div");
-      sparkle.className = "sparkle";
-      sparkle.style.left = Math.random() * 100 + 'vw';
-      sparkle.style.top = Math.random() * 100 + 'vh';
-      document.body.appendChild(sparkle);
-      setTimeout(() => sparkle.remove(), 1000);
-    });
-    function generateHearts() {
-      setInterval(() => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.bottom = '0';
-        heart.style.animationDuration = 4 + Math.random() * 3 + 's';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 8000);
-      }, 600);
+
+    let player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('ytplayer', {
+        height: '0',
+        width: '0',
+        videoId: 'nUF_NyG7-04',
+        playerVars: {
+          autoplay: 1,
+          loop: 1,
+          playlist: 'nUF_NyG7-04',
+          controls: 0,
+          mute: 1
+        },
+        events: {
+          onReady: (event) => event.target.playVideo()
+        }
+      });
     }
   </script>
 </body>
