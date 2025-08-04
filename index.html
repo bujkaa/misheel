@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hey... 💖</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Comic Sans MS', cursive, sans-serif;
+      background: url('https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #container {
+      max-width: 90%;
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+    }
+    #msg {
+      font-size: 6vw;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    @media (min-width: 600px) {
+      #msg {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="msg">Hey...</div>
+  </div>
+
+  <script>
+    const messages = [
+      "Hey... 👋",
+      "I know this might be unexpected... XD",
+      "But there's something on my heart for so long now :) .",
+      "You're beautiful, inside and out.",
+      "So I have to ask...",
+      "Would you be my girlfriend? 💖"
+      "-Bujka"
+    ];
+
+    let i = 0;
+    const msg = document.getElementById("msg");
+
+    function showNext() {
+      msg.style.opacity = 0;
+      setTimeout(() => {
+        msg.textContent = messages[i];
+        msg.style.opacity = 1;
+        i++;
+        if (i < messages.length) {
+          setTimeout(showNext, 2800);
+        }
+      }, 900);
+    }
+
+    window.onload = () => setTimeout(showNext, 1000);
+  </script>
+</body>
+</html>
