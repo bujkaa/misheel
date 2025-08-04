@@ -89,6 +89,20 @@
       z-index: 2;
     }
 
+    #unmuteBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
     .envelope {
       position: absolute;
       top: 10%;
@@ -141,9 +155,10 @@
 
   <div id="container">
     <div id="messages"></div>
-    <a id="replyBtn" href="https://instagram.com/bvjkas/" target="_blank">
+    <a id="replyBtn" href="https://instagram.com/YOURUSERNAME" target="_blank">
       💌 Ийшээ ороод хариугаа хэлээрэй 😳
     </a>
+    <button id="unmuteBtn">🔊 Tap for sound</button>
   </div>
 
   <audio id="bgmusic" autoplay loop muted>
@@ -152,13 +167,11 @@
 
   <script>
     const messages = [
-      "Hey... 👋",
-      "I know this might be unexpected... lol",
-      "But there’s something I’ve been meaning to say for a long time now 🙂.",
-      "You're beautiful, inside and out. ✨",
-      "And I love you.",
-      "Would you be my girlfriend? 💖",
-      "Yours truly, Dorjgotov 💖"
+      "Hey... 👋", 
+      "Магалаа би чамайг дандаа хардаг", 
+      "Харах болгондоо хармалдаг", 
+      "Чи ёстой хөөрхөн✨", 
+      "Надад онжгоо өгөөч",
     ];
 
     const container = document.getElementById("messages");
@@ -194,8 +207,13 @@
 
     window.addEventListener("load", () => {
       setTimeout(showMessages, 1000);
+    });
+
+    document.getElementById("unmuteBtn").addEventListener("click", () => {
       const bgm = document.getElementById("bgmusic");
       bgm.muted = false;
+      bgm.play();
+      document.getElementById("unmuteBtn").style.display = "none";
     });
 
     // Sparkle effect on scroll
