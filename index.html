@@ -10,7 +10,7 @@
   <style>
     * {
       box-sizing: border-box;
-      font-family: 'Dancing Script', cursive;
+      font-family: 'Dancing Script', cursive, 'Segoe UI Emoji', sans-serif;
     }
     html, body {
       margin: 0;
@@ -19,17 +19,6 @@
       width: 100%;
       overflow: hidden;
       background-color: #000;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://plus.unsplash.com/premium_vector-1709061466287-569b20046420?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center center no-repeat;
-      background-size: contain;
-      z-index: -1;
     }
     #container {
       display: flex;
@@ -51,6 +40,7 @@
     .line span {
       opacity: 0;
       display: inline-block;
+      white-space: pre;
       animation: letterFade 0.3s forwards;
     }
     @keyframes letterFade {
@@ -91,7 +81,7 @@
 <body>
   <div id="container">
     <div id="messages"></div>
-    <a id="replyBtn" href="https://instagram.com/bvjkas/" target="_blank">💌 Ийшээ ороод хариугаа хэлээрэй</a>
+    <a id="replyBtn" href="https://instagram.com/YOURUSERNAME" target="_blank">💌 Ийшээ ороод хариугаа хэлээрэй</a>
     <button id="unmuteBtn">🔊 Tap for sound</button>
   </div>
   <div id="ytplayer"></div>
@@ -171,3 +161,4 @@
   </script>
 </body>
 </html>
+
