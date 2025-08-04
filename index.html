@@ -46,6 +46,19 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       text-decoration: none;
     }
+    #soundBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.4);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      z-index: 10;
+    }
 
     @media (min-width: 600px) {
       #msg {
@@ -100,45 +113,63 @@
   <div id="container">
     <div id="msg">Hey...</div>
     <a id="replyBtn" href="https://instagram.com/bvjkas/" target="_blank">💬 Tap to reply</a>
+    <button id="soundBtn">🔇 Tap for sound</button>
   </div>
 
-  <!-- YouTube Player -->
   <div id="ytplayer"></div>
+
   <script>
+    // YouTube music setup
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    document.body.appendChild(tag);
 
     let player;
+    let soundBtn = document.getElementById('soundBtn');
+
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('ytplayer', {
         height: '0',
         width: '0',
-        videoId: 'nUF_NyG7-04',
+        videoId: 'nUF_NyG7-04', // your chosen song
         playerVars: {
           autoplay: 1,
           loop: 1,
           playlist: 'nUF_NyG7-04',
           controls: 0,
-          mute: 0
+          mute: 1
         },
         events: {
           onReady: (event) => event.target.playVideo()
         }
       });
     }
-  </script>
 
-  <!-- Typing animation -->
-  <script>
+    soundBtn.addEventListener("click", () => {
+      if (player && player.unMute) {
+        player.unMute();
+        soundBtn.style.display = "none";
+      }
+    });
+
+    // 🌸 Petals
+    setInterval(() => {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = 5 + Math.random() * 5 + 's';
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 10000);
+    }, 300);
+
+    // 💬 Typing Message
     const messages = [
       "Hey... 👋",
-      "I know this might be unexpected...lol",
-      "But there’s something I’ve been meaning to say for a long time now :).",
-      "you're beautiful, inside and out.💫",
+      "I know this might be unexpected... lol",
+      "But there’s something I’ve been meaning to say for a long time now 🙂.",
+      "You're beautiful, inside and out. 💫",
       "And I love you.",
-      "Would you be my girlfriend? 💖"
+      "Would you be my girlfriend? 💖",
       "Yours truly, Bujka 💖"
     ];
 
@@ -159,15 +190,7 @@
     }
 
     window.onload = () => {
-      typeWriter();
-      setInterval(() => {
-        const petal = document.createElement('div');
-        petal.className = 'petal';
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = 5 + Math.random() * 5 + 's';
-        document.body.appendChild(petal);
-        setTimeout(() => petal.remove(), 10000);
-      }, 300);
+      setTimeout(typeWriter, 1000);
     };
   </script>
 </body>
