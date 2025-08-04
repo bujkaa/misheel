@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hey... 💌</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
@@ -142,76 +143,94 @@
   <div style="position:absolute; left:-9999px; top:-9999px;">
     <iframe id="ytplayer" width="0" height="0" src="https://www.youtube.com/embed/nUF_NyG7-04?autoplay=1&loop=1&playlist=nUF_NyG7-04&mute=1&controls=0" frameborder="0" allow="autoplay" allowfullscreen></iframe>
   </div>
-  <script>
-    const messages = [
-      "Hey... 👋",
-      "I know this might be unexpected... lol",
-      "But there’s something I’ve been meaning to say for a long time now 🙂.",
-      "You're beautiful, inside and out. ✨",
-      "I fell in love like you would fall asleep...",
-      "Slowly and then all at once."
-      "Would you be my girlfriend? 💖",
-    ];
-    const container = document.getElementById("messages");
-    let i = 0;
-    function typeLine(text, callback) {
-      const line = document.createElement("div");
-      line.className = "line";
-      container.appendChild(line);
-      let j = 0;
-      function typeChar() {
-        if (j < text.length) {
-          line.textContent += text.charAt(j++);
-          setTimeout(typeChar, 45);
-        } else {
-          if (text.includes("Would you be my girlfriend?")) {
-            line.classList.add("heartbeat");
-          }
-          if (callback) setTimeout(callback, 800);
-        }
-      }
-      typeChar();
-    }
-    function showMessages() {
-      if (i < messages.length) {
-        typeLine(messages[i], showMessages);
-        i++;
+ <script>
+  const messages = [
+    "Hey... 👋",
+    "I know this might be unexpected... lol",
+    "But there’s something I’ve been meaning to say for a long time now 🙂.",
+    "You're beautiful, inside and out. ✨",
+    "I fell in love the way you fall asleep...",
+    "Slowly, and then all at once"
+    "Soooo, would you be my girlfriend? 💖"
+  ];
+
+  const container = document.getElementById("messages");
+  const signature = document.getElementById("signature");
+  let i = 0;
+
+  function typeLine(text, callback) {
+    const line = document.createElement("div");
+    line.className = "line";
+    container.appendChild(line);
+    let j = 0;
+
+    function typeChar() {
+      if (j < text.length) {
+        line.textContent += text.charAt(j++);
+        setTimeout(typeChar, 45);
       } else {
-        setTimeout(() => {
-          document.getElementById("signature").textContent = "Yours truly, Bujka 💖";
-          confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-        }, 1000);
+        if (text.includes("Would you be my girlfriend?")) {
+          line.classList.add("heartbeat");
+        }
+        if (callback) setTimeout(callback, 800);
       }
     }
-    window.addEventListener("load", () => {
-      setTimeout(showMessages, 1000);
-      generateHearts();
-    });
-    window.addEventListener("scroll", () => {
-      const sparkle = document.createElement("div");
-      sparkle.className = "sparkle";
-      sparkle.style.left = Math.random() * 100 + 'vw';
-      sparkle.style.top = Math.random() * 100 + 'vh';
-      document.body.appendChild(sparkle);
-      setTimeout(() => sparkle.remove(), 1000);
-    });
-    function generateHearts() {
-      setInterval(() => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.bottom = '0';
-        heart.style.animationDuration = 4 + Math.random() * 3 + 's';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 8000);
-      }, 600);
+
+    typeChar();
+  }
+
+  function showMessages() {
+    if (i < messages.length) {
+      typeLine(messages[i], showMessages);
+      i++;
+    } else {
+      // show signature + confetti
+      setTimeout(() => {
+        signature.textContent = "Yours truly, Bujka 💖";
+        signature.style.opacity = "1";
+        confetti({
+          particleCount: 100,
+          spread: 80,
+          origin: { y: 0.6 },
+        });
+      }, 1000);
     }
-    document.getElementById("unmuteBtn").addEventListener("click", () => {
-      const iframe = document.getElementById("ytplayer");
-      const src = iframe.src;
-      iframe.src = src.replace("mute=1", "mute=0");
-      document.getElementById("unmuteBtn").style.display = "none";
-    });
-  </script>
+  }
+
+  // Sparkle scroll
+  window.addEventListener("scroll", () => {
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.style.left = Math.random() * 100 + 'vw';
+    sparkle.style.top = Math.random() * 100 + 'vh';
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 1000);
+  });
+
+  // Floating hearts
+  function generateHearts() {
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.bottom = '0';
+      heart.style.animationDuration = 4 + Math.random() * 3 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }, 600);
+  }
+
+  window.addEventListener("load", () => {
+    setTimeout(showMessages, 1000);
+    generateHearts();
+  });
+
+  // Unmute YouTube on button click
+  document.getElementById("unmuteBtn").addEventListener("click", () => {
+    const iframe = document.getElementById("ytplayer");
+    iframe.src = iframe.src.replace("mute=1", "mute=0");
+    document.getElementById("unmuteBtn").style.display = "none";
+  });
+</script>
 </body>
 </html>
