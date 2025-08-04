@@ -11,7 +11,7 @@
       padding: 0;
       height: 100%;
       font-family: -apple-system, BlinkMacSystemFont, 'Comic Sans MS', cursive, sans-serif;
-      background: url('https://images.unsplash.com/photo-1603322029894-50a7e3f6f155?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background: url('https://plus.unsplash.com/premium_photo-1689518469262-6f9499412ef0?q=80&w=1145&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
       background-size: cover;
       color: white;
       text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
@@ -31,8 +31,8 @@
     #msg {
       font-size: 6vw;
       max-width: 90%;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
+      min-height: 4em;
+      white-space: pre-wrap;
     }
     #replyBtn {
       margin-top: 40px;
@@ -53,36 +53,40 @@
       }
     }
 
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
+    .petal {
+      position: fixed;
+      width: 15px;
+      height: 15px;
       background: pink;
-      transform: rotate(45deg);
-      animation: float 8s linear infinite;
-      opacity: 0.7;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: fall 10s linear infinite;
+      pointer-events: none;
       z-index: 1;
     }
-    .heart::before, .heart::after {
-      content: "";
+
+    .petal::before, .petal::after {
+      content: '';
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 15px;
+      height: 15px;
       background: pink;
       border-radius: 50%;
     }
-    .heart::before { top: -10px; left: 0; }
-    .heart::after  { top: 0; left: -10px; }
 
-    @keyframes float {
-      0% {
-        bottom: -10%;
-        transform: translateX(0) rotate(45deg);
-      }
-      100% {
-        bottom: 110%;
-        transform: translateX(30px) rotate(45deg);
-      }
+    .petal::before {
+      top: -8px;
+      left: 0;
+    }
+
+    .petal::after {
+      left: -8px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
     }
 
     #ytplayer {
@@ -95,10 +99,10 @@
 <body>
   <div id="container">
     <div id="msg">Hey...</div>
-    <a id="replyBtn" href="https://www.instagram.com/bvjkas/" target="_blank">💬 Tap to reply</a>
+    <a id="replyBtn" href="https://instagram.com/bvjkas/" target="_blank">💬 Tap to reply</a>
   </div>
 
-  <!-- YouTube player (hidden but plays) -->
+  <!-- YouTube Player -->
   <div id="ytplayer"></div>
   <script>
     const tag = document.createElement('script');
@@ -111,11 +115,11 @@
       player = new YT.Player('ytplayer', {
         height: '0',
         width: '0',
-        videoId: 'dstuitW8PWM',
+        videoId: 'nUF_NyG7-04',
         playerVars: {
           autoplay: 1,
           loop: 1,
-          playlist: 'dstuitW8PWM',
+          playlist: 'nUF_NyG7-04',
           controls: 0,
           mute: 0
         },
@@ -126,45 +130,45 @@
     }
   </script>
 
+  <!-- Typing animation -->
   <script>
     const messages = [
       "Hey... 👋",
-      "I know this might be unexpected... lol",
-      "But there's something on my heart for a long time now.",
-      "You're beautiful, inside and out.💫",
-      "So I have to ask...",
+      "I know this might be unexpected...lol",
+      "But there’s something I’ve been meaning to say for a long time now :).",
+      "you're beautiful, inside and out.💫",
+      "And I love you.",
       "Would you be my girlfriend? 💖"
-      "From"
-      "Your future boyfriend"
-      "-Bujka"
+      "Yours truly, Bujka 💖"
     ];
 
-    let i = 0;
-    const msg = document.getElementById("msg");
+    let msgEl = document.getElementById("msg");
+    let i = 0, j = 0;
 
-    function showNext() {
-      msg.style.opacity = 0;
-      setTimeout(() => {
-        msg.textContent = messages[i];
-        msg.style.opacity = 1;
-        i++;
-        if (i < messages.length) {
-          setTimeout(showNext, 3000);
+    function typeWriter() {
+      if (i < messages.length) {
+        if (j <= messages[i].length) {
+          msgEl.textContent = messages[i].substring(0, j++);
+          setTimeout(typeWriter, 50);
+        } else {
+          j = 0;
+          i++;
+          setTimeout(typeWriter, 1500);
         }
-      }, 900);
+      }
     }
 
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 5 + Math.random() * 5 + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 10000);
-    }
-
-    setInterval(createHeart, 500);
-    window.onload = () => setTimeout(showNext, 1000);
+    window.onload = () => {
+      typeWriter();
+      setInterval(() => {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = 5 + Math.random() * 5 + 's';
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 10000);
+      }, 300);
+    };
   </script>
 </body>
 </html>
